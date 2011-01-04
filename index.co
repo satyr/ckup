@@ -19,9 +19,9 @@ console.log \%s, require(\ckup).render ->
         strong -> text '"Hello, world!"'
 
   '''
-  @button   id: \run, []=\↓
-  @a href: \docs.htm, []=' ? '
-  @button   id: \url, []=\↗
+  @button   id: \run, title: \render,   []=' &#x2193; ' #v
+  @a        id: \doc, href : \docs.htm, []=' &#xFF1F; ' #?
+  @button   id: \url, title: \open,     []=' &#x2197; ' #/
   @textarea id: \htm
   @script src: \https://github.com/satyr/coco/raw/master/extras/coco.js
   @script src: \ckup.js
