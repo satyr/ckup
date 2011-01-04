@@ -1,0 +1,32 @@
+# Ckup [demo](index.html) written in Ckup, spat simply to stdout.
+console.log \%s, require(\ckup).render ->
+  # Straight forward usage here.
+  # If you don't feel like writing `@`s,
+  # see [docs.co](#docs) and its [associated task](#Cokefile).
+  @doctype \html
+  @meta charset: \utf-8
+  @title 'Ckup Demo'
+  @link rel: \stylesheet, href: \index.css
+  @textarea id: \kup, []='''
+
+    doctype \\html
+    html ->
+      head ->
+        meta charset: \\utf-8
+      body ->
+        code $ 'coco> '
+        strong -> text '"Hello, world!"'
+
+  '''
+  @button   id: \run, []=\↓
+  @a href: \docs.htm, []=' ? '
+  @button   id: \url, []=\↗
+  @textarea id: \htm
+  @script src: \https://github.com/satyr/coco/raw/master/extras/coco.js
+  @script src: \ckup.js
+  @script 'new ' + ->
+    @[id] = document.getElementById id for id of <[ kup run url htm ]>
+    @run.onclick = =>
+      @htm.value = Ckup.render Function 'with(this)' + Coco.compile @kup.value
+    @url.onclick = =>
+      open 'data:text/html,' + @htm.value

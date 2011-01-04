@@ -1,0 +1,30 @@
+<!DOCTYPE html><meta charset="utf-8"/><title>Ckup Demo</title
+><link rel="stylesheet" href="index.css"/><textarea id="kup">
+doctype \html
+html ->
+  head ->
+    meta charset: \utf-8
+  body ->
+    code $ 'coco> '
+    strong -> text '"Hello, world!"'
+</textarea
+><button id="run">↓</button
+><a href="docs.htm"> ? </a
+><button id="url">↗</button
+><textarea id="htm"></textarea
+><script src="https://github.com/satyr/coco/raw/master/extras/coco.js"></script
+><script src="ckup.js"></script
+><script>new function (){
+      var id, _i, _ref, _len, _this = this;
+      for (_i = 0, _len = (_ref = ['kup', 'run', 'url', 'htm']).length; _i < _len; ++_i) {
+        id = _ref[_i];
+        this[id] = document.getElementById(id);
+      }
+      this.run.onclick = function(){
+        return _this.htm.value = Ckup.render(Function('with(this)' + Coco.compile(_this.kup.value)));
+      };
+      return this.url.onclick = function(){
+        return open('data:text/html,' + _this.htm.value);
+      };
+    }</script
+>

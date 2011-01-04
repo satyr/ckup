@@ -1,0 +1,66 @@
+# `Ckup = require \ckup` in CommonJS, `self.Ckup` in browser etc.
+Ckup = (exports ? @Ckup = {}) import
+  VERSION: \0.1.0
+
+  # `.call`s a `template` function with a `Ckup` clone set to `this` value,
+  # returning the rendered HTML string.
+  render: (template) ->
+    # `@_` holds the HTML being built.
+    template.call me = @{_: ''}
+    me._
+
+  # Turns a string HTML-safe.
+  quote: do (
+    re = /[&<>\"\']/g
+    fn = ->
+      switch it
+      case \& then '&amp;'
+      case \< then '&lt;'
+      case \> then '&gt;'
+      case \" then '&#34;'
+      case \' then '&#39;'
+  ) -> -> "#{it}".replace re, fn
+
+  # Appends a DTD declaration.
+  doctype : -> @_ += "<!DOCTYPE #{it}>"; void
+  # Appends a text node.
+  text    : -> @_ += @quote it; void
+
+  # Builds an HTML element and appends it.
+  #
+  # - `atrs`: Optional key-value pair of attributes.
+  # - `body`: Content of the element. Called recursively if function.
+  # - `tailless`: Indicates end tag omission.
+  element: (name, atrs, body, tailless) ->
+    code = \< + name
+    if typeof atrs is \object
+    then code += " #{key}=\"#{ @quote val }\"" for key, val in atrs
+    else body = atrs
+    if tailless then @_ += code + \/>; return
+    @_ += code + \>
+    body.=call this if typeof body is \function
+    @_ += body if body
+    @_ += "</#{name}\n>"
+    void
+
+# Each tag-named method delegates to `@element`.
+for tag of <[
+  a abbr acronym address applet area article aside audio
+  b base basefont bdo big blockquote body br button
+  canvas caption center cite code col colgroup command
+  datalist dd del details dfn dir div dl dt
+  em embed fieldset figcaption figure font footer form frame frameset
+  h1 h2 h3 h4 h5 h6 head header hgroup hr html
+  i iframe img input ins keygen kbd label legend li link
+  map mark menu meta meter nav noframes noscript
+  object ol optgroup option output p param pre progress q rp rt ruby
+  s samp script section select small source span strike strong style sub
+  summary sup table tbody td textarea tfoot th thead time title tr tt
+  u ul video xmp
+]> then do ->
+  tailless = tag of <[ area base basefont br hr img input link meta ]>
+  # `@p ->` -> `@element \p, ->`
+  Ckup[tag] = (head, body) -> @element tag, head, body, tailless; void
+
+#     @$ is @quote  # HTML-escape -> es -> s -> $
+Ckup.$ = Ckup.quote

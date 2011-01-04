@@ -1,0 +1,10 @@
+# [_index.co_](#index) -> _index.html_
+task \index, ->
+  require(\child_process).exec 'coco index.co > index.html'
+  , -> console.dir @@ if it
+
+# [_docs.co_](#docs) -> _docs.htm_
+task \docs, ->
+  spit 'docs.htm', require(\./ckup).render do
+    # Support `@`-less markup with `with` hack.
+    Function 'with(this)' + require(\coco).compile slurp \docs.co

@@ -1,0 +1,4 @@
+html {height:100%}
+body {margin:0; padding:0; height:99%; text-align:center}
+#kup, #htm {display:block; width:99%; height:48%; margin:0; border:0}
+#run, #url {width:40%; height:3%; font-weight:bold}
