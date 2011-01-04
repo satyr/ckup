@@ -1,6 +1,7 @@
 doctype \html
 title 'Ckup Docs'
 link rel: \stylesheet, href: \../coco/src/docs.css
+link rel: \icon      , href: \ckup.png
 body()
 script src: \../coco/lib/etc/showdown.js
 script src: \../coco/lib/etc/prettify.js

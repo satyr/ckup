@@ -7,6 +7,7 @@ console.log \%s, require(\ckup).render ->
   @meta charset: \utf-8
   @title 'Ckup Demo'
   @link rel: \stylesheet, href: \index.css
+  @link rel: \icon      , href: \ckup.png
   @textarea id: \kup, []='''
 
     doctype \\html
