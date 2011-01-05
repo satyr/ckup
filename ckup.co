@@ -5,6 +5,11 @@ Ckup = (exports ? @Ckup = {}) import
   # `.call`s a `template` function with a `Ckup` clone set to `this` value,
   # returning the rendered HTML string.
   render: (template) ->
+    unless typeof template is \function
+      # If `template` isn't a function, compile it using `Coco` global
+      # with `with` with `this` to enable `@`-less style.
+      template = Function 'with(this)' +
+        (Coco ? require \coco).compile '' + template
     # `@_` holds the HTML being built.
     template.call me = @{_: ''}
     me._
@@ -39,7 +44,7 @@ Ckup = (exports ? @Ckup = {}) import
     if tailless then @_ += code + \/>; return
     @_ += code + \>
     body.=call this if typeof body is \function
-    @_ += body if body
+    @_ += body if body?
     @_ += "</#{name}\n>"
     void
 
@@ -62,5 +67,5 @@ for tag of <[
   # `@p ->` -> `@element \p, ->`
   Ckup[tag] = (head, body) -> @element tag, head, body, tailless; void
 
-#     @$ is @quote  # HTML-escape -> es -> s -> $
+#     @$ is @quote  # HTML-escape -> es -> S -> $
 Ckup.$ = Ckup.quote

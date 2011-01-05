@@ -1,3 +1,7 @@
+# Provides documentataion using [Coco](http://satyr.github.com/coco/)'s
+# builtin source viewer.
+#
+# Written in `@`less style via [`coke docs`](#Cokefile1).
 doctype \html
 title 'Ckup Docs'
 link rel: \stylesheet, href: \../coco/src/docs.css

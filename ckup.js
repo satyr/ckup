@@ -11,6 +11,9 @@
   };
   Ckup = (_ref = typeof exports != 'undefined' && exports !== null ? exports : this.Ckup = {}, _ref.VERSION = '0.1.0', _ref.render = function(template){
     var me, _ref;
+    if (typeof template !== 'function') {
+      template = Function('with(this)' + (typeof Coco != 'undefined' && Coco !== null ? Coco : require('coco')).compile('' + template));
+    }
     template.call(me = (_ref = __clone(this), _ref._ = '', _ref));
     return me._;
   }, _ref.quote = (function(re, fn){
@@ -53,7 +56,7 @@
     if (typeof body === 'function') {
       body = body.call(this);
     }
-    if (body) {
+    if (body != null) {
       this._ += body;
     }
     this._ += "</" + name + "\n>";

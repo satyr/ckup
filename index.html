@@ -21,7 +21,7 @@ html ->
         this[id] = document.getElementById(id);
       }
       this.run.onclick = function(){
-        return _this.htm.value = Ckup.render(Function('with(this)' + Coco.compile(_this.kup.value)));
+        return _this.htm.value = Ckup.render(_this.kup.value);
       };
       return this.url.onclick = function(){
         return open('data:text/html,' + _this.htm.value);
