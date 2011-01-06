@@ -31,22 +31,33 @@ Ckup = (exports ? @Ckup = {}) import
   # Appends a text node.
   text    : -> @_ += @quote it; void
 
-  # Builds an HTML element and appends it.
+  # Builds an HTML element.
   #
-  # - `atrs`: Optional key-value pair of attributes.
-  # - `body`: Content of the element. Called recursively if function.
+  # - `args`: A list of element content, which can be either of
+  #   - an object containing key-value pairs of attributes
+  #   - a function which will be called recursively
+  #   - any existent value
   # - `tailless`: Indicates end tag omission.
-  element: (name, atrs, body, tailless) ->
-    code = \< + name
-    if typeof atrs is \object
-    then code += " #{key}=\"#{ @quote val }\"" for key, val in atrs
-    else body = atrs
+  element: (name, args, tailless) ->
+    code = \< + name; bodies = []
+    for arg of args
+      if typeof arg is \object
+      then code += " #{key}=\"#{ @quote val }\"" for key, val in arg
+      else bodies.push arg
     if tailless then @_ += code + \/>; return
     @_ += code + \>
-    body.=call this if typeof body is \function
-    @_ += body if body?
+    for body of bodies
+      body.=call this if typeof body is \function
+      @_ += body if body?
     @_ += "</#{name}\n>"
     void
+
+  # Shortcut to `@a {href: url}, txt`.
+  A: (url, txt) ->
+    args = [...@@]
+    args.0 = href: url
+    args.1 = url unless txt
+    @element \a, args; void
 
 # Each tag-named method delegates to `@element`.
 for tag of <[
@@ -64,8 +75,8 @@ for tag of <[
   u ul video xmp
 ]> then do ->
   tailless = tag of <[ area base basefont br hr img input link meta ]>
-  # `@p ->` -> `@element \p, ->`
-  Ckup[tag] = (head, body) -> @element tag, head, body, tailless; void
+  # `@a href: url, ->` -> `@element \a, [href: url, ->]`
+  Ckup[tag] = -> @element tag, @@, tailless; void
 
 #     @$ is @quote  # HTML-escape -> es -> S -> $
 Ckup.$ = Ckup.quote

@@ -9,5 +9,5 @@ link rel: \icon      , href: \ckup.png
 body()
 script src: \../coco/lib/etc/showdown.js
 script src: \../coco/lib/etc/prettify.js
-script "sources = ['#{ <[ ckup index docs Cokefile ]>.join "','" }']"
+script "sources = ['#{ <[ ckup cli index docs Cokefile ]>.join "','" }']"
 script src: \../coco/lib/docs.js
