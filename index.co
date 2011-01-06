@@ -2,7 +2,7 @@
 console.log \%s, require(\ckup).render ->
   @doctype \html
   @meta charset: \utf-8
-  @title 'Ckup Demo'
+  @title 'ckup demo'
   @link rel: \stylesheet, href: \index.css
   @link rel: \icon      , href: \ckup.png
   @textarea id: \kup, []='''
@@ -26,8 +26,7 @@ console.log \%s, require(\ckup).render ->
     @[id] = document.getElementById id for id of <[ kup run url htm ]>
     @run.onclick = => @htm.value = Ckup.render @kup.value
     @url.onclick = => open 'data:text/html,' + @htm.value
-  @a href: \https://github.com/satyr/ckup, ->
-    @img do
-      alt: \fork-me-on-github
-      src: \http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png
-      style: 'position:absolute; top:0; right:0; border:0; z-index:9'
+  @a href: \https://github.com/satyr/ckup, -> @img do
+    alt: \fork-me-on-github
+    src: \http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png
+    style: 'position:absolute; top:0; right:0; border:0; z-index:9'
