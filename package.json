@@ -1,0 +1,17 @@
+{"name": "ckup", "version": "0.1.0"
+
+,"description": "Markup as Coco"
+,"keywords"   : ["html", "template", "coco"]
+
+,"author": "satyr <murky.satyr@gmail.com> (http://satyr.github.com)"
+
+,"licenses": 
+ [{"type": "MIT", "url": "https://github.com/satyr/ckup/raw/master/LICENSE.co"}]
+
+,"homepage"  : "http://satyr.github.com/ckup/"
+,"repository": {"type": "git", "url": "git://github.com/satyr/ckup.git"}
+
+,"engines": {"node": ">=0.2.5"}, "dependencies": {"coco": ">=0.2.1"}
+
+,"main": "./ckup", "bin": {"ckup": "./cli.co"}
+}
