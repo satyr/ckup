@@ -3,11 +3,12 @@
 #
 # Written in `@`less style via [`coke docs`](#Cokefile1).
 doctype \html
-title 'Ckup Docs'
-link rel: \stylesheet, href: \../coco/src/docs.css
+title 'ckup docs'
+link rel: \stylesheet, href: \../coco/doc/doc.css
 link rel: \icon      , href: \ckup.png
 body()
-script src: \../coco/lib/etc/showdown.js
-script src: \../coco/lib/etc/prettify.js
+script src: \../coco/doc/showdown.js
+script src: \../coco/doc/prettify.js
+script src: \../coco/doc/lang-co.js
 script "sources = ['#{ <[ ckup cli index docs Cokefile ]>.join "','" }']"
-script src: \../coco/lib/docs.js
+script src: \../coco/doc/doc.js
