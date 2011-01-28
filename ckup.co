@@ -1,15 +1,16 @@
-# `Ckup = require \ckup` in CommonJS, `self.Ckup` in browser etc.
-Ckup = (exports ? @Ckup = {}) import
-  VERSION: \0.1.0
+# `ckup = require \ckup` in CommonJS, `self.Ckup` in browser etc.
+ckup = exports ? @Ckup = {}
+ckup import
+  VERSION: \0.1.2
 
-  # `.call`s a `template` function with a `Ckup` clone set to `this` value,
+  # `.call`s a `template` function with a `ckup` clone set to `this` value,
   # returning the rendered HTML string.
   render: (template) ->
     unless typeof template is \function
       # If `template` isn't a function, compile it using `Coco` global
       # with `with` with `this` to enable `@`-less style.
       template = Function 'with(this)' +
-        (Coco ? require \coco).compile '' + template
+        (Coco ? require \coco).compile "#{template}"
     # `@_` holds the HTML being built.
     template.call me = @{_: ''}
     me._
@@ -77,7 +78,7 @@ for tag of <[
 ]> then do ->
   tailless = tag of <[ area base basefont br hr img input link meta ]>
   # `@a href: url, ->` -> `@element \a, [href: url, ->]`
-  Ckup[tag] = -> @element tag, @@, tailless; void
+  ckup[tag] = -> @element tag, @@, tailless; void
 
 #     @$ is @quote  # HTML-escape -> es -> S -> $
-Ckup.$ = Ckup.quote
+ckup.$ = ckup.quote

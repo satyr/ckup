@@ -1,4 +1,4 @@
-{"name": "ckup", "version": "0.1.1"
+{"name": "ckup", "version": "0.1.2"
 
 ,"description": "Markup as Coco"
 ,"keywords"   : ["html", "template", "coco"]
@@ -11,7 +11,7 @@
 ,"homepage"  : "http://satyr.github.com/ckup/"
 ,"repository": {"type": "git", "url": "git://github.com/satyr/ckup.git"}
 
-,"engines": {"node": ">=0.2.5"}, "dependencies": {"coco": ">=0.2.2"}
+,"engines": {"node": ">=0.2.5"}, "dependencies": {"coco": ">=0.3.0"}
 
 ,"main": "./ckup", "bin": {"ckup": "./cli.co"}
 }
