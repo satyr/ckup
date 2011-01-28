@@ -5,27 +5,29 @@ console.log \%s, require(\ckup).render ->
   @title 'ckup demo'
   @link rel: \stylesheet, href: \index.css
   @link rel: \icon      , href: \ckup.png
-  @textarea id: \kup, []='''
+  @textarea id: \kup, '''
 
     doctype \\html
-    html ->
-      head ->
-        meta charset: \\utf-8
-      body ->
-        code $ 'coco> '
-        strong -> text '"Hello, world!"'
+    <- html
+
+    head ->
+      meta charset: \\utf-8
+
+    body ->
+      code $ 'coco> '
+      strong -> text '"Hello, world!"'
 
   '''
-  @button   id: \run, title: \render,   []=' &#x2193; ' #v
-  @a        id: \doc, href : \docs.htm, []=' &#xFF1F; ' #?
-  @button   id: \url, title: \open,     []=' &#x2197; ' #/
+  @button   id: \run, title: \render,   ' &#x2193; ' #v
+  @a        id: \doc, href : \docs.htm, ' &#xFF1F; ' #?
+  @button   id: \url, title: \open,     ' &#x2197; ' #/
   @textarea id: \htm
   @script src: \https://github.com/satyr/coco/raw/master/extras/coco.js
   @script src: \ckup.js
   @script 'new ' + ->
     @[id] = document.getElementById id for id of <[ kup run url htm ]>
-    @run.onclick = => @htm.value = Ckup.render @kup.value
-    @url.onclick = => open 'data:text/html,' + @htm.value
+    @run.onclick = ~> @htm.value = Ckup.render @kup.value
+    @url.onclick = ~> open 'data:text/html,' + @htm.value
   @a href: \https://github.com/satyr/ckup, -> @img do
     alt: \fork-me-on-github
     src: \http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png

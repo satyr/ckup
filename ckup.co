@@ -57,7 +57,8 @@ Ckup = (exports ? @Ckup = {}) import
     args = [...@@]
     args.0 = href: url
     args.1 = url unless txt
-    @element \a, args; void
+    @element \a args
+    void
 
 # Each tag-named method delegates to `@element`.
 for tag of <[

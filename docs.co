@@ -6,7 +6,7 @@ doctype \html
 title 'ckup docs'
 link rel: \stylesheet, href: \../coco/doc/doc.css
 link rel: \icon      , href: \ckup.png
-body()
+<- body
 script src: \../coco/doc/showdown.js
 script src: \../coco/doc/prettify.js
 script src: \../coco/doc/lang-co.js

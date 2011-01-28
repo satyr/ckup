@@ -29,9 +29,9 @@ do ->
 
 function render (code, name, asis) ->
   html = Ckup.render code
-  return console.log \%s, html if not name or o.print
+  return console.log \%s html if not name or o.print
   unless asis
-    name.=replace /\.\w+$/, ''
+    name.=replace /\.\w+$/ ''
     # Extension for output is fixed for now.
     # __.html__ for _index_, __.htm__ for others.
     name += if /(?:^|\/)index$/.test name then \.html else \.htm
