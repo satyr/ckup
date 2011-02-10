@@ -23,8 +23,14 @@
   ckup.css = function(rules){
     var code, selector, children, that, kv, selectors, declarations, subrules, key, val, ss, k, s, _ref, _i, _ref2, _len, _j, _len2;
     code = '';
+    if (typeof rules === 'function') {
+      rules = rules.call(this);
+    }
     for (selector in rules) {
       children = rules[selector];
+      if (typeof children === 'function') {
+        children = children.call(this);
+      }
       if (that = (_ref = children.mixin, delete children.mixin, _ref)) {
         for (_i = 0, _len = (_ref2 = [].concat(that)).length; _i < _len; ++_i) {
           kv = _ref2[_i];
@@ -34,7 +40,12 @@
       subrules = declarations = selectors = '';
       for (key in children) {
         val = children[key];
-        if (typeof val === 'object') {
+        switch (typeof val) {
+        case 'string':
+        case 'number':
+          declarations += "  " + this.decamelize(key) + ": " + val + ";\n";
+          break;
+        default:
           ss = [];
           selectors || (selectors = selector.split(this.COMMA));
           for (_i = 0, _len = (_ref2 = key.split(this.COMMA)).length; _i < _len; ++_i) {
@@ -45,8 +56,6 @@
             }
           }
           (subrules || (subrules = {}))[ss.join(', ')] = val;
-        } else {
-          declarations += "  " + this.decamelize(key) + ": " + val + ";\n";
         }
       }
       declarations && (code += selector + " {\n" + declarations + "}\n");

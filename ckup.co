@@ -21,16 +21,19 @@ ckup import
   # Renders an object as CSS rules a la <https://github.com/aeosynth/ccss>.
   css: (rules) ->
     code = ''
+    rules.=call this if typeof rules is \function
     for selector, children in rules
-      children <<<< kv for kv of [].concat that if delete children.mixin
+      children.=call this if typeof children is \function
+      children <<<< kv for kv of []concat that if delete children.mixin
       subrules = declarations = selectors = ''
       for key, val in children
-        if typeof val is \object
+        switch typeof val
+        case <[ string number ]>
+          declarations += "  #{ @decamelize key }: #{val};\n"
+        default
           ss = []; selectors ||= selector.split @COMMA
           ss.push "#{s} #{k}" for s of selectors for k of key.split @COMMA
           (subrules ||= {})[ss.join ', '] = val
-        else
-          declarations += "  #{ @decamelize key }: #{val};\n"
       declarations and code += "#{selector} {\n#{declarations}}\n"
       subrules     and code += @css subrules
     code

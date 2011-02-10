@@ -7,6 +7,7 @@ o    = require(\coco/optparse) do
   stdin   : 'read stdin, then write to the given file or stdout'
   eval    : 'read arguments as source'
   watch   : 'watch and rerender on changes'
+  css     : 'render as ccss'
   version : 'show version'
   help    : 'show me'
 
@@ -28,27 +29,28 @@ do ->
   listen()
 
 function render (code, name, asis) ->
-  html = Ckup.render code
-  return console.log \%s html if not name or o.print
+  kup = Ckup.render if o.css then '<- -> text css it\n' + code else code
+  return console.log \%s kup if not name or o.print
   unless asis
     name.=replace /\.\w+$/ ''
-    # Extension for output is fixed for now.
-    # __.html__ for _index_, __.htm__ for others.
-    name += if /(?:^|\/)index$/.test name then \.html else \.htm
-  fs.writeFileSync name, html
-  (try require \util catch then console).log name
+    name += \. + if o.css then \css else
+      # Extension for HTML output is fixed for now.
+      # __.html__ for _index_, __.htm__ for others.
+      if /\/index$/test "/#{name}" then \html else \htm
+  fs.writeFileSync name, kup
+  (try require \util catch then console)log name
 
 function listen ->
   code  = ''
   stdin = process.openStdin()
-  stdin.on \data, -> code += it
-  stdin.on \end , -> render code, files.0, true
+  stdin.on \data -> code += it
+  stdin.on \end  -> render code, files.0, true
 
 function watch (file) ->
-  fs.watchFile file, {+persistent, interval: 500ms}, (curr, prev) ->
-    return if curr.size is prev.size and +curr.mtime is +prev.mtime
-    try render fs.readFileSync(file, \utf8), file
-    catch e then console.error e?.stack or e
+  curr, prev <- fs.watchFile file, {+persistent, interval: 500ms}
+  return if curr.size is prev.size and +curr.mtime is +prev.mtime
+  try render fs.readFileSync(file, \utf8), file
+  catch e then console.error e?.stack or e
 
 function v -> console.log 'ckup ' + Ckup.VERSION
-function h -> console.log 'Usage: ckup [options] [files]\n\n' + o
+function h -> console.log 'Usage: ckup [options] [files]\n%s' o
