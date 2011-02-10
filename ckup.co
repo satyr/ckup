@@ -10,7 +10,7 @@ ckup import
       # If `template` isn't a function, compile it using `Coco` global
       # with `with` with `this` to enable `@`-less style.
       template = Function 'with(this)' +
-        (Coco ? require \coco).compile "#{template}"
+        (Coco ? require \coco)compile "#{template}"
     # `@_` holds the HTML being built.
     template.call me = @{_: ''}
     me._
@@ -25,12 +25,16 @@ ckup import
       case \> then '&gt;'
       case \" then '&#34;'
       case \' then '&#39;'
-  ) -> -> "#{it}".replace re, fn
+  ) -> -> "#{it}"replace re, fn
 
   # Appends a DTD declaration.
   doctype : -> @_ += "<!DOCTYPE #{it}>"; void
+  # Appends a text as is.
+  htm     : -> @_ += it; void
   # Appends a text node.
   text    : -> @_ += @quote it; void
+  # Appends an HTML entity.
+  entity  : -> @_ += "&#{ if typeof it is \number then \# + it else it };"; void
 
   # Builds an HTML element.
   #
@@ -80,5 +84,5 @@ for tag of <[
   # `@a href: url, ->` -> `@element \a, [href: url, ->]`
   ckup[tag] = -> @element tag, @@, tailless; void
 
-#     @$ is @quote  # HTML-escape -> es -> S -> $
-ckup.$ = ckup.quote
+## Aliases
+ckup{quote: $, htm: H, text: T, entity: E} = ckup

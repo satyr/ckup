@@ -40,8 +40,14 @@
   ckup.doctype = function(it){
     this._ += "<!DOCTYPE " + it + ">";
   };
+  ckup.htm = function(it){
+    this._ += it;
+  };
   ckup.text = function(it){
     this._ += this.quote(it);
+  };
+  ckup.entity = function(it){
+    this._ += "&" + (typeof it === 'number' ? '#' + it : it) + ";";
   };
   ckup.element = function(name, args, tailless){
     var code, bodies, arg, key, val, body, _i, _len;
@@ -89,5 +95,5 @@
     tag = _ref[_i];
     _fn(tag);
   }
-  ckup.$ = ckup.quote;
+  ckup.$ = ckup.quote, ckup.H = ckup.htm, ckup.T = ckup.text, ckup.E = ckup.entity;
 }).call(this);
