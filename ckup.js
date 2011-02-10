@@ -2,7 +2,7 @@
   var ckup, tag, _i, _ref, _len, __clone = function(it){
     function fn(){ if (this.__proto__ !== it) this.__proto__ = it }
     return fn.prototype = it, new fn;
-  }, __slice = [].slice, _fn = function(tag){
+  }, __importAll = function(obj, src){ for (var key in src) obj[key] = src[key]; return obj }, __slice = [].slice, _fn = function(tag){
     var tailless;
     tailless = tag === 'area' || tag === 'base' || tag === 'basefont' || tag === 'br' || tag === 'hr' || tag === 'img' || tag === 'input' || tag === 'link' || tag === 'meta';
     return ckup[tag] = function(){
@@ -11,6 +11,7 @@
   };
   ckup = typeof exports != 'undefined' && exports !== null ? exports : this.Ckup = {};
   ckup.VERSION = '0.1.2';
+  ckup.COMMA = /\s*,\s*/;
   ckup.render = function(template){
     var me, _ref;
     if (typeof template !== 'function') {
@@ -18,6 +19,40 @@
     }
     template.call(me = (_ref = __clone(this), _ref._ = '', _ref));
     return me._;
+  };
+  ckup.css = function(rules){
+    var code, selector, children, that, kv, selectors, declarations, subrules, key, val, ss, k, s, _ref, _i, _ref2, _len, _j, _len2;
+    code = '';
+    for (selector in rules) {
+      children = rules[selector];
+      if (that = (_ref = children.mixin, delete children.mixin, _ref)) {
+        for (_i = 0, _len = (_ref2 = [].concat(that)).length; _i < _len; ++_i) {
+          kv = _ref2[_i];
+          __importAll(children, kv);
+        }
+      }
+      subrules = declarations = selectors = '';
+      for (key in children) {
+        val = children[key];
+        if (typeof val === 'object') {
+          ss = [];
+          selectors || (selectors = selector.split(this.COMMA));
+          for (_i = 0, _len = (_ref2 = key.split(this.COMMA)).length; _i < _len; ++_i) {
+            k = _ref2[_i];
+            for (_j = 0, _len2 = selectors.length; _j < _len2; ++_j) {
+              s = selectors[_j];
+              ss.push(s + " " + k);
+            }
+          }
+          (subrules || (subrules = {}))[ss.join(', ')] = val;
+        } else {
+          declarations += "  " + this.decamelize(key) + ": " + val + ";\n";
+        }
+      }
+      declarations && (code += selector + " {\n" + declarations + "}\n");
+      subrules && (code += this.css(subrules));
+    }
+    return code;
   };
   ckup.quote = (function(re, fn){
     return function(it){
@@ -36,6 +71,13 @@
     case '\'':
       return '&#39;';
     }
+  }));
+  ckup.decamelize = (function(re, fn){
+    return function(it){
+      return ("" + it).replace(re, fn);
+    };
+  }(/[A-Z]/g, function(it){
+    return '-' + it.toLowerCase();
   }));
   ckup.doctype = function(it){
     this._ += "<!DOCTYPE " + it + ">";
@@ -68,7 +110,7 @@
       this._ += code + '/>';
       return;
     }
-    this._ += code + '>';
+    this._ += code + '\n>';
     for (_i = 0, _len = bodies.length; _i < _len; ++_i) {
       body = bodies[_i];
       if (typeof body === 'function') {
@@ -78,7 +120,7 @@
         this._ += body;
       }
     }
-    this._ += "</" + name + "\n>";
+    this._ += "</" + name + ">";
   };
   ckup.A = function(url, txt){
     var args;

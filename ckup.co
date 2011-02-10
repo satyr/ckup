@@ -3,6 +3,9 @@ ckup = exports ? @Ckup = {}
 ckup import
   VERSION: \0.1.2
 
+  COMMA: /\s*,\s*/
+
+
   # `.call`s a `template` function with a `ckup` clone set to `this` value,
   # returning the rendered HTML string.
   render: (template) ->
@@ -15,6 +18,23 @@ ckup import
     template.call me = @{_: ''}
     me._
 
+  # Renders an object as CSS rules a la <https://github.com/aeosynth/ccss>.
+  css: (rules) ->
+    code = ''
+    for selector, children in rules
+      children <<<< kv for kv of [].concat that if delete children.mixin
+      subrules = declarations = selectors = ''
+      for key, val in children
+        if typeof val is \object
+          ss = []; selectors ||= selector.split @COMMA
+          ss.push "#{s} #{k}" for s of selectors for k of key.split @COMMA
+          (subrules ||= {})[ss.join ', '] = val
+        else
+          declarations += "  #{ @decamelize key }: #{val};\n"
+      declarations and code += "#{selector} {\n#{declarations}}\n"
+      subrules     and code += @css subrules
+    code
+
   # Turns a string HTML-safe.
   quote: do (
     re = /[&<>\"\']/g
@@ -25,6 +45,11 @@ ckup import
       case \> then '&gt;'
       case \" then '&#34;'
       case \' then '&#39;'
+  ) -> -> "#{it}"replace re, fn
+
+  decamelize: do (
+    re = /[A-Z]/g
+    fn = -> \- + it.toLowerCase()
   ) -> -> "#{it}"replace re, fn
 
   # Appends a DTD declaration.
@@ -50,11 +75,11 @@ ckup import
       then code += " #{key}=\"#{ @quote val }\"" for key, val in arg
       else bodies.push arg
     if tailless then @_ += code + \/>; return
-    @_ += code + \>
+    @_ += code + \\n>
     for body of bodies
       body.=call this if typeof body is \function
       @_ += body if body?
-    @_ += "</#{name}\n>"
+    @_ += "</#{name}>"
     void
 
   # Shortcut to `@a {href: url}, txt`.
