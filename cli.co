@@ -29,7 +29,7 @@ do ->
   listen()
 
 function render (code, name, asis) ->
-  kup = Ckup.render if o.css then '<- -> text css it\n' + code else code
+  kup = Ckup.render if o.css then '<- (~> @_ = css it)\n' + code else code
   return console.log \%s kup if not name or o.print
   unless asis
     name.=replace /\.\w+$/ ''
