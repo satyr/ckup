@@ -99,7 +99,7 @@
   ckup.doctype = function(it){
     this._ += "<!DOCTYPE " + it + ">";
   };
-  ckup.htm = function(it){
+  ckup.raw = function(it){
     this._ += it;
   };
   ckup.text = function(it){
@@ -154,5 +154,5 @@
     tag = _ref[_i];
     _fn(tag);
   }
-  ckup.$ = ckup.quote, ckup.H = ckup.htm, ckup.T = ckup.text, ckup.E = ckup.entity;
+  ckup.$ = ckup.quote, ckup.R = ckup.raw, ckup.T = ckup.text, ckup.E = ckup.entity;
 }).call(this);

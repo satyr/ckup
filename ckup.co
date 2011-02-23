@@ -62,7 +62,7 @@ ckup import
   # Appends a DTD declaration.
   doctype : -> @_ += "<!DOCTYPE #{it}>"; void
   # Appends a text as is.
-  htm     : -> @_ += it; void
+  raw     : -> @_ += it; void
   # Appends a text node.
   text    : -> @_ += @quote it; void
   # Appends an HTML entity.
@@ -117,4 +117,4 @@ for tag of <[
   ckup[tag] = -> @element tag, @@, tailless; void
 
 ## Aliases
-ckup{quote: $, htm: H, text: T, entity: E} = ckup
+ckup{quote: $, raw: R, text: T, entity: E} = ckup
