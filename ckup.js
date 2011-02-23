@@ -5,13 +5,12 @@
   }, __importAll = function(obj, src){ for (var key in src) obj[key] = src[key]; return obj }, __slice = [].slice, _fn = function(tag){
     var tailless;
     tailless = tag === 'area' || tag === 'base' || tag === 'basefont' || tag === 'br' || tag === 'hr' || tag === 'img' || tag === 'input' || tag === 'link' || tag === 'meta';
-    return ckup[tag] = function(){
+    ckup[tag] = function(){
       this.element(tag, arguments, tailless);
     };
   };
   ckup = typeof exports != 'undefined' && exports !== null ? exports : this.Ckup = {};
-  ckup.VERSION = '0.1.3';
-  ckup.COMMA = /\s*,\s*/;
+  ckup.VERSION = '0.1.4b';
   ckup.render = function(template){
     var me, _ref;
     if (typeof template !== 'function') {
@@ -21,7 +20,7 @@
     return me._;
   };
   ckup.css = function(rules){
-    var code, selector, children, that, kv, selectors, declarations, subrules, key, val, ss, k, s, _ref, _i, _ref2, _len, _j, _len2;
+    var code, selector, children, that, kv, selectors, declarations, subrules, key, val, v, ss, k, s, _ref, _i, _ref2, _len, _j, _len2;
     code = '';
     if (typeof rules === 'function') {
       rules = rules.call(this);
@@ -43,7 +42,14 @@
         switch (typeof val) {
         case 'string':
         case 'number':
-          declarations += "  " + this.decamelize(key) + ": " + val + ";\n";
+          if ((key = this.decamelize(key)).charAt() === '$') {
+            key = key.slice(1);
+            for (_i = 0, _len = (_ref2 = this.VENDORS).length; _i < _len; ++_i) {
+              v = _ref2[_i];
+              declarations += "  -" + v + "-" + key + ": " + val + ";\n";
+            }
+          }
+          declarations += "  " + key + ": " + val + ";\n";
           break;
         default:
           ss = [];
@@ -63,7 +69,9 @@
     }
     return code;
   };
-  ckup.quote = (function(re, fn){
+  ckup.COMMA = /\s*,\s*/;
+  ckup.VENDORS = ['webkit', 'moz', 'ms', 'o'];
+  ckup.quote = function(re, fn){
     return function(it){
       return ("" + it).replace(re, fn);
     };
@@ -80,14 +88,14 @@
     case '\'':
       return '&#39;';
     }
-  }));
-  ckup.decamelize = (function(re, fn){
+  });
+  ckup.decamelize = function(re, fn){
     return function(it){
       return ("" + it).replace(re, fn);
     };
   }(/[A-Z]/g, function(it){
     return '-' + it.toLowerCase();
-  }));
+  });
   ckup.doctype = function(it){
     this._ += "<!DOCTYPE " + it + ">";
   };

@@ -13,6 +13,9 @@ console.log \%s require(\ckup).render ->
       display: \inline-block, width: \40%, height: \4%
     '#run, #url, #doc':
       fontWeight: \bold
+    '#ribbon':
+      position: \fixed, bottom: 0, right: 0, zIndex: 9
+      $transform: 'rotate(90deg)', border: 0
 
   @textarea id: \kup, '''
 
@@ -42,6 +45,6 @@ console.log \%s require(\ckup).render ->
     @run.onclick = ~> @htm.value = Ckup.render @kup.value
     @url.onclick = ~> open 'data:text/html,' + @htm.value
   @a href: \https://github.com/satyr/ckup, -> @img do
+    id : \ribbon
     alt: \fork-me-on-github
     src: \http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png
-    style: 'position:absolute; top:0; right:0; border:0; z-index:9'

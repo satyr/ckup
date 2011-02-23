@@ -1,9 +1,7 @@
 # `ckup = require \ckup` in CommonJS, `self.Ckup` in browser etc.
 ckup = exports ? @Ckup = {}
 ckup import
-  VERSION: \0.1.3
-
-  COMMA: /\s*,\s*/
+  VERSION: \0.1.4b
 
   # `.call`s a `template` function with a `ckup` clone set to `this` value,
   # returning the rendered HTML string.
@@ -28,7 +26,11 @@ ckup import
       for key, val in children
         switch typeof val
         case <[ string number ]>
-          declarations += "  #{ @decamelize key }: #{val};\n"
+          # _$_-prefixed properties are expanded as vendor-prefixed.
+          if (key = @decamelize key)charAt() is \$
+            key.=slice 1
+            declarations += "  -#{v}-#{key}: #{val};\n" for v of @VENDORS
+          declarations += "  #{key}: #{val};\n"
         default
           ss = []; selectors ||= selector.split @COMMA
           ss.push "#{s} #{k}" for s of selectors for k of key.split @COMMA
@@ -37,8 +39,11 @@ ckup import
       subrules     and code += @css subrules
     code
 
+  COMMA   : /\s*,\s*/
+  VENDORS : <[ webkit moz ms o ]>
+
   # Turns a string HTML-safe.
-  quote: do (
+  quote: let (
     re = /[&<>\"\']/g
     fn = ->
       switch it
@@ -49,7 +54,7 @@ ckup import
       case \' then '&#39;'
   ) -> -> "#{it}"replace re, fn
 
-  decamelize: do (
+  decamelize: let (
     re = /[A-Z]/g
     fn = -> \- + it.toLowerCase()
   ) -> -> "#{it}"replace re, fn
