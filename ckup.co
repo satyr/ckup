@@ -1,7 +1,7 @@
 # `ckup = require \ckup` in CommonJS, `self.Ckup` in browser etc.
 ckup = exports ? @Ckup = {}
 ckup import
-  VERSION: \0.1.4b
+  VERSION: \0.1.4
 
   # `.call`s a `template` function with a `ckup` clone set to `this` value,
   # returning the rendered HTML string.
