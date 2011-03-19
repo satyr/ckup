@@ -32,11 +32,11 @@ function render (code, name, asis) ->
   kup = Ckup.render if o.css then '<- (~> @_ = css it)\n' + code else code
   return console.log \%s kup if not name or o.print
   unless asis
-    name.=replace /\.\w+$/ ''
-    name += \. + if o.css then \css else
-      # Extension for HTML output is fixed for now.
-      # __.html__ for _index_, __.htm__ for others.
-      if /\/index$/test "/#{name}" then \html else \htm
+    if /\.\w+\.co$/itest name
+    # index.html.co => index.html
+    then name.=slice 0 -3
+    # doc.co => doc.htm
+    else name.=replace /(?:\.\w+)?$/ (if o.css then \.css else \.htm)
   fs.writeFileSync name, kup
   require(\util)log name
 
