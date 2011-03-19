@@ -90,12 +90,7 @@ ckup import
     void
 
   # Shortcut to `@a {href: url}, txt`.
-  A: (url, txt) ->
-    args = [...@@]
-    args.0 = href: url
-    args.1 = url unless txt
-    @element \a args
-    void
+  A: (url, txt) -> @element \a [...@@] <<< [href: url, txt or url]; void
 
 # Each tag-named method delegates to `@element`.
 for tag of <[

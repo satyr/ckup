@@ -38,7 +38,7 @@ function render (code, name, asis) ->
       # __.html__ for _index_, __.htm__ for others.
       if /\/index$/test "/#{name}" then \html else \htm
   fs.writeFileSync name, kup
-  (try require \util catch then console)log name
+  require(\util)log name
 
 function listen ->
   code  = ''

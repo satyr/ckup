@@ -1,7 +1,7 @@
 # [_index.co_](#index) -> [_index.html_](index.html)
 task \index ->
-  require(\child_process).exec 'coco index.co > index.html'
+  require(\child_process)exec 'coco index.co > index.html'
   , -> console.dir @@ if it
 
 # [_docs.co_](#docs) -> [_docs.htm_](docs.htm)
-task \docs -> spit \docs.htm require(\./ckup).render slurp \docs.co
+task \docs -> spit \docs.htm require(\./ckup)render slurp \docs.co

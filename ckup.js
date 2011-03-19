@@ -20,7 +20,7 @@
     return me._;
   };
   ckup.css = function(rules){
-    var code, selector, children, that, kv, selectors, declarations, subrules, key, val, v, ss, k, s, _ref, _i, _ref2, _len, _j, _len2;
+    var code, selector, children, that, kv, selectors, declarations, subrules, key, val, v, ss, k, s, _i, _ref, _len, _j, _len2;
     code = '';
     if (typeof rules === 'function') {
       rules = rules.call(this);
@@ -30,9 +30,9 @@
       if (typeof children === 'function') {
         children = children.call(this);
       }
-      if (that = (_ref = children.mixin, delete children.mixin, _ref)) {
-        for (_i = 0, _len = (_ref2 = [].concat(that)).length; _i < _len; ++_i) {
-          kv = _ref2[_i];
+      if (that = children.mixin, delete children.mixin, that) {
+        for (_i = 0, _len = (_ref = [].concat(that)).length; _i < _len; ++_i) {
+          kv = _ref[_i];
           __importAll(children, kv);
         }
       }
@@ -44,8 +44,8 @@
         case 'number':
           if ((key = this.decamelize(key)).charAt() === '$') {
             key = key.slice(1);
-            for (_i = 0, _len = (_ref2 = this.VENDORS).length; _i < _len; ++_i) {
-              v = _ref2[_i];
+            for (_i = 0, _len = (_ref = this.VENDORS).length; _i < _len; ++_i) {
+              v = _ref[_i];
               declarations += "  -" + v + "-" + key + ": " + val + ";\n";
             }
           }
@@ -54,8 +54,8 @@
         default:
           ss = [];
           selectors || (selectors = selector.split(this.COMMA));
-          for (_i = 0, _len = (_ref2 = key.split(this.COMMA)).length; _i < _len; ++_i) {
-            k = _ref2[_i];
+          for (_i = 0, _len = (_ref = key.split(this.COMMA)).length; _i < _len; ++_i) {
+            k = _ref[_i];
             for (_j = 0, _len2 = selectors.length; _j < _len2; ++_j) {
               s = selectors[_j];
               ss.push(s + " " + k);
@@ -140,15 +140,10 @@
     this._ += "</" + name + ">";
   };
   ckup.A = function(url, txt){
-    var args;
-    args = __slice.call(arguments);
-    args[0] = {
+    var _ref;
+    this.element('a', (_ref = __slice.call(arguments), _ref[0] = {
       href: url
-    };
-    if (!txt) {
-      args[1] = url;
-    }
-    this.element('a', args);
+    }, _ref[1] = txt || url, _ref));
   };
   for (_i = 0, _len = (_ref = ['a', 'abbr', 'acronym', 'address', 'applet', 'area', 'article', 'aside', 'audio', 'b', 'base', 'basefont', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'command', 'datalist', 'dd', 'del', 'details', 'dfn', 'dir', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'frame', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'keygen', 'kbd', 'label', 'legend', 'li', 'link', 'map', 'mark', 'menu', 'meta', 'meter', 'nav', 'noframes', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strike', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'tt', 'u', 'ul', 'video', 'xmp']).length; _i < _len; ++_i) {
     tag = _ref[_i];
