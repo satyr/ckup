@@ -10,7 +10,7 @@
   ckup = typeof exports != 'undefined' && exports !== null
     ? exports
     : this.Ckup = {};
-  ckup.VERSION = '0.1.4';
+  ckup.VERSION = '0.1.5';
   ckup.render = function(template){
     var me, _ref;
     if (typeof template !== 'function') {

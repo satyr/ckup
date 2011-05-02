@@ -1,7 +1,7 @@
 #!/usr/bin/env coco
 
 #### `ckup` command line interface
-Ckup = require \ckup
+ckup = require \./ckup
 o    = require(\coco/optparse) do
   print   : 'write to stdout instead of .htm'
   stdin   : 'read stdin, then write to the given file or stdout'
@@ -29,7 +29,7 @@ do ->
   listen()
 
 function render (code, name, asis) ->
-  kup = Ckup.render if o.css then '<- (~> @_ = css it)\n' + code else code
+  kup = ckup.render if o.css then '<- (~> @_ = css it)\n' + code else code
   return console.log \%s kup if not name or o.print
   unless asis
     if /\.\w+\.co$/itest name
@@ -52,5 +52,5 @@ function watch (file) ->
   try render fs.readFileSync(file, \utf8), file
   catch e then console.error e?.stack or e
 
-function v -> console.log 'ckup ' + Ckup.VERSION
+function v -> console.log 'ckup ' + ckup.VERSION
 function h -> console.log 'Usage: ckup [options] [files]\n%s' o
