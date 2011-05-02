@@ -9,12 +9,16 @@
       this.element(tag, arguments, tailless);
     };
   };
-  ckup = typeof exports != 'undefined' && exports !== null ? exports : this.Ckup = {};
+  ckup = typeof exports != 'undefined' && exports !== null
+    ? exports
+    : this.Ckup = {};
   ckup.VERSION = '0.1.4';
   ckup.render = function(template){
     var me, _ref;
     if (typeof template !== 'function') {
-      template = Function('with(this)' + (typeof Coco != 'undefined' && Coco !== null ? Coco : require('coco')).compile("" + template));
+      template = Function('with(this)' + (typeof Coco != 'undefined' && Coco !== null
+        ? Coco
+        : require('coco')).compile(template + ""));
     }
     template.call(me = (_ref = __clone(this), _ref._ = '', _ref));
     return me._;
@@ -71,31 +75,37 @@
   };
   ckup.COMMA = /\s*,\s*/;
   ckup.VENDORS = ['webkit', 'moz', 'ms', 'o'];
-  ckup.quote = function(re, fn){
-    return function(it){
-      return ("" + it).replace(re, fn);
+  ckup.quote = (function(){
+    var re, fn;
+    re = /[&<>\"\']/g;
+    fn = function(it){
+      switch (it) {
+      case '&':
+        return '&amp;';
+      case '<':
+        return '&lt;';
+      case '>':
+        return '&gt;';
+      case '"':
+        return '&#34;';
+      case '\'':
+        return '&#39;';
+      }
     };
-  }(/[&<>\"\']/g, function(it){
-    switch (it) {
-    case '&':
-      return '&amp;';
-    case '<':
-      return '&lt;';
-    case '>':
-      return '&gt;';
-    case '"':
-      return '&#34;';
-    case '\'':
-      return '&#39;';
-    }
-  });
-  ckup.decamelize = function(re, fn){
     return function(it){
-      return ("" + it).replace(re, fn);
+      return (it + "").replace(re, fn);
     };
-  }(/[A-Z]/g, function(it){
-    return '-' + it.toLowerCase();
-  });
+  }.call(this));
+  ckup.decamelize = (function(){
+    var re, fn;
+    re = /[A-Z]/g;
+    fn = function(it){
+      return '-' + it.toLowerCase();
+    };
+    return function(it){
+      return (it + "").replace(re, fn);
+    };
+  }.call(this));
   ckup.doctype = function(it){
     this._ += "<!DOCTYPE " + it + ">";
   };
@@ -147,7 +157,7 @@
   };
   for (_i = 0, _len = (_ref = ['a', 'abbr', 'acronym', 'address', 'applet', 'area', 'article', 'aside', 'audio', 'b', 'base', 'basefont', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'command', 'datalist', 'dd', 'del', 'details', 'dfn', 'dir', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'frame', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'keygen', 'kbd', 'label', 'legend', 'li', 'link', 'map', 'mark', 'menu', 'meta', 'meter', 'nav', 'noframes', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strike', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'tt', 'u', 'ul', 'video', 'xmp']).length; _i < _len; ++_i) {
     tag = _ref[_i];
-    _fn(tag);
+    (_fn(tag));
   }
   ckup.$ = ckup.quote, ckup.R = ckup.raw, ckup.T = ckup.text, ckup.E = ckup.entity;
 }).call(this);

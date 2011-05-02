@@ -43,7 +43,7 @@ ckup import
   VENDORS : <[ webkit moz ms o ]>
 
   # Turns a string HTML-safe.
-  quote: let (
+  quote: let
     re = /[&<>\"\']/g
     fn = ->
       switch it
@@ -52,12 +52,12 @@ ckup import
       case \> then '&gt;'
       case \" then '&#34;'
       case \' then '&#39;'
-  ) -> -> "#{it}"replace re, fn
+    -> "#{it}"replace re, fn
 
-  decamelize: let (
+  decamelize: let
     re = /[A-Z]/g
     fn = -> \- + it.toLowerCase()
-  ) -> -> "#{it}"replace re, fn
+    -> "#{it}"replace re, fn
 
   # Appends a DTD declaration.
   doctype : -> @_ += "<!DOCTYPE #{it}>"; void

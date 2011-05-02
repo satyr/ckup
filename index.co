@@ -1,50 +1,50 @@
-# Ckup [demo](index.html) written in Ckup, spat simply to stdout.
-console.log \%s require(\ckup)render ->
-  @doctype \html
-  @meta charset: \utf-8
-  @title 'ckup demo'
-  @link rel: \icon, href: \ckup.png
-  @style @css do
-    html: height: \100%
-    body: margin: 0, padding: 0, height: \99%, textAlign: \center
-    '#kup, #htm':
-      display: \block, width: \99%, height: \45%, margin: 0, border:0
-    '#run, #url':
-      display: \inline-block, width: \40%, height: \4%
-    '#run, #url, #doc':
-      fontWeight: \bold
-    '#ribbon':
-      position: \fixed, bottom: 0, right: 0, zIndex: 9
-      $transform: 'rotate(90deg)', border: 0
+# Ckup [demo](index.html) written in Coco/Ckup, spat simply to stdout.
+<--> console.log \%s require(\ckup)render it
+@doctype \html
+@meta charset: \utf-8
+@title 'ckup demo'
+@link rel: \icon, href: \ckup.png
+@style @css do
+  html: height: \100%
+  body: margin: 0, padding: 0, height: \99%, textAlign: \center
+  '#kup, #htm':
+    display: \block, width: \99%, height: \45%, margin: 0, border:0
+  '#run, #url':
+    display: \inline-block, width: \40%, height: \4%
+  '#run, #url, #doc':
+    fontWeight: \bold
+  '#ribbon':
+    position: \fixed, bottom: 0, right: 0, zIndex: 9
+    $transform: 'rotate(90deg)', border: 0
 
-  @textarea id: \kup, '''
+@textarea id: \kup, '''
 
-    doctype \\html
-    <- html
+  doctype \\html
+  <- html
 
-    head ->
-      meta charset: \\utf-8
-      style css 'ol, ul': 'ol, ul': li: fontStyle: \\italic
+  head ->
+    meta charset: \\utf-8
+    style css 'ol, ul': 'ol, ul': li: fontStyle: \\italic
 
-    body ->
-      code $ 'coco> '
-      strong -> text '"Hello, world!"'
-      ol ->
-        do li3 = -> li i-~it for i from 3; void
-        ul -> li3 3
+  body ->
+    code $ 'coco> '
+    strong -> text '"Hello, world!"'
+    ol ->
+      do li3 = -> li i-~it for i from 3; void
+      ul -> li3 3
 
-  '''
-  @button   id: \run, title: \render,   ' &#x2193; ' #v
-  @a        id: \doc, href : \docs.htm, ' &#xFF1F; ' #?
-  @button   id: \url, title: \open,     ' &#x2197; ' #/
-  @textarea id: \htm
-  @script src: \https://github.com/satyr/coco/raw/master/extras/coco.js
-  @script src: \ckup.js
-  @script 'new ' + ->
-    @[id] = document.getElementById id for id of <[ kup run url htm ]>
-    @run.onclick = ~> @htm.value = Ckup.render @kup.value
-    @url.onclick = ~> open 'data:text/html,' + @htm.value
-  @A \https://github.com/satyr/ckup -> @img do
-    id : \ribbon
-    alt: \fork-me-on-github
-    src: \http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png
+'''
+@button   id: \run, title: \render,   ' &#x2193; ' #v
+@a        id: \doc, href : \docs.htm, ' &#xFF1F; ' #?
+@button   id: \url, title: \open,     ' &#x2197; ' #/
+@textarea id: \htm
+@script src: \https://github.com/satyr/coco/raw/master/extras/coco.js
+@script src: \ckup.js
+@script 'new ' + ->
+  @[id] = document.getElementById id for id of <[ kup run url htm ]>
+  @run.onclick = ~> @htm.value = Ckup.render @kup.value
+  @url.onclick = ~> open 'data:text/html,' + @htm.value
+@A \https://github.com/satyr/ckup -> @img do
+  id : \ribbon
+  alt: \fork-me-on-github
+  src: \http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png
