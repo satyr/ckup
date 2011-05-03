@@ -13,5 +13,5 @@
 
 ,"engines": {"node": ">=0.4.0"}, "dependencies": {"coco": ">=0.5.0"}
 
-,"main": "./ckup", "bin": {"ckup": "./cli.co"}
+,"main": "./ckup", "bin": {"ckup": "./cli.js"}
 }
