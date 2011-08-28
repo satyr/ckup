@@ -49,7 +49,7 @@ body ->
   code $ 'coco> '
   strong -> text '"Hello, world!"'
   ol ->
-    do li3 = -> li i-~it for i from 3; void
+    do li3 = -> li i-~it for i til 3; void
     ul -> li3 3
 </textarea><button id="run" title="render"
 > &#x2193; </button><a id="doc" href="docs.htm"
@@ -68,7 +68,7 @@ body ->
         return _this.htm.value = Ckup.render(_this.kup.value);
       };
       return this.url.onclick = function(){
-        return open('data:text/html,' + _this.htm.value);
+        return open('data:text/html,' + encodeURIComponent(_this.htm.value));
       };
     }</script><a href="https://github.com/satyr/ckup"
 ><img id="ribbon" alt="fork-me-on-github" src="http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"/></a>

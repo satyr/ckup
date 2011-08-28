@@ -12,24 +12,24 @@ o    = require(\coco/optparse) do
   version : 'show version'
   help    : 'show me'
 
-v() if o.version
-h() if o.help
+v! if o.version
+h! if o.help
 
 files = o.$args
 fs    = require \fs
 
-do ->
-  return listen()              if o.stdin
+let
+  return listen!               if o.stdin
   return render files.join \\n if o.eval
   for file of files
     render fs.readFileSync(file, \utf8), file
     watch file if o.watch
   return if file or o.version or o.help
-  h v()
+  h v!
   console.log '\nlistening to stdin...'
-  listen()
+  listen!
 
-function render (code, name, asis) ->
+function render code, name, asis
   kup = ckup.render if o.css then '<- (~> @_ = css it)\n' + code else code
   return console.log \%s kup if not name or o.print
   unless asis
@@ -41,17 +41,17 @@ function render (code, name, asis) ->
   fs.writeFileSync name, kup
   require(\util)log name
 
-function listen ->
+function listen
   code  = ''
-  stdin = process.openStdin()
+  stdin = process.openStdin!
   stdin.on \data -> code += it
   stdin.on \end  -> render code, files.0, true
 
-function watch (file) ->
+function watch file
   curr, prev <- fs.watchFile file, {+persistent, interval: 500ms}
   return if curr.size is prev.size and +curr.mtime is +prev.mtime
   try render fs.readFileSync(file, \utf8), file
-  catch e then console.error e?.stack or e
+  catch then console.error e?.stack or e
 
-function v -> console.log 'ckup ' + ckup.VERSION
-function h -> console.log 'Usage: ckup [options] [files]\n%s' o
+function v then console.log 'ckup ' + ckup.VERSION
+function h then console.log 'Usage: ckup [options] [files]\n%s' o

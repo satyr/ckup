@@ -1,7 +1,7 @@
 # `ckup = require \ckup` in CommonJS, `self.Ckup` in browser etc.
 ckup = exports ? @Ckup = {}
 ckup import
-  VERSION: \0.1.6
+  VERSION: \0.1.7b
 
   # `.call`s a `template` function with a `ckup` clone set to `this` value,
   # returning the rendered HTML string.
@@ -9,11 +9,13 @@ ckup import
     unless typeof template is \function
       # If `template` isn't a function, compile it using `Coco` global
       # with `with` with `this` to enable `@`-less style.
-      template = Function 'with(this)' +
-        (Coco ? require \coco)compile "#{template}"
-    # `@_` holds the HTML being built.
-    template.call me = @{_: ''}
+      template = Function \
+        'with(this)' + (Coco ? require \coco)compile "#template"
+    template.call me = ^this
     me._
+
+  # `@_` holds the code being built.
+  _: ''
 
   # Renders an object as CSS rules a la <https://github.com/aeosynth/ccss>.
   css: (rules) ->
@@ -25,17 +27,17 @@ ckup import
       subrules = declarations = selectors = ''
       for key, val in children
         switch typeof val
-        case <[ string number ]>
+        case \string \number
           # _$_-prefixed properties are expanded as vendor-prefixed.
           if (key = @decamelize key)charAt() is \$
             key.=slice 1
-            declarations += "  -#{v}-#{key}: #{val};\n" for v of @VENDORS
-          declarations += "  #{key}: #{val};\n"
+            declarations += "  -#v-#key: #val;\n" for v of @VENDORS
+          declarations += "  #key: #val;\n"
         default
           ss = []; selectors ||= selector.split @COMMA
-          ss.push "#{s} #{k}" for s of selectors for k of key.split @COMMA
+          ss.push "#s #k" for s of selectors for k of key.split @COMMA
           (subrules ||= {})[ss.join ', '] = val
-      declarations and code += "#{selector} {\n#{declarations}}\n"
+      declarations and code += "#selector {\n#declarations}\n"
       subrules     and code += @css subrules
     code
 
@@ -43,24 +45,22 @@ ckup import
   VENDORS : <[ webkit moz ms o ]>
 
   # Turns a string HTML-safe.
-  quote: let
-    re = /[&<>\"\']/g
-    fn = ->
+  quote: let re = /[&<>\"\']/g
+    function fn
       switch it
       case \& then '&amp;'
       case \< then '&lt;'
       case \> then '&gt;'
       case \" then '&#34;'
       case \' then '&#39;'
-    -> "#{it}"replace re, fn
+    -> "#it"replace re, fn
 
-  decamelize: let
-    re = /[A-Z]/g
-    fn = -> \- + it.toLowerCase()
-    -> "#{it}"replace re, fn
+  decamelize: let re = /[A-Z]/g
+    function fn then \- + it.toLowerCase()
+    -> "#it"replace re, fn
 
   # Appends a DTD declaration.
-  doctype : -> @_ += "<!DOCTYPE #{it}>"; void
+  doctype : -> @_ += "<!DOCTYPE #it>"; void
   # Appends a text as is.
   raw     : -> @_ += it; void
   # Appends a text node.
@@ -79,14 +79,16 @@ ckup import
     code = \< + name; bodies = []
     for arg of args
       if typeof arg is \object
-      then code += " #{key}=\"#{ @quote val }\"" for key, val in arg
+        code += " #key=\"#{ @quote val }\"" for key, val in arg
       else bodies.push arg
-    if tailless then @_ += code + \/>; return
-    @_ += code + \\n>
+    if tailless
+      @_ += "#code/>"
+      return
+    @_ += "#code\n>"
     for body of bodies
       body.=call this if typeof body is \function
       @_ += body if body?
-    @_ += "</#{name}>"
+    @_ += "</#name>"
     void
 
   # Shortcut to `@a {href: url}, txt`.

@@ -11,7 +11,7 @@
 ,"homepage"  : "http://satyr.github.com/ckup/"
 ,"repository": {"type": "git", "url": "git://github.com/satyr/ckup.git"}
 
-,"engines": {"node": ">=0.4.0"}, "dependencies": {"coco": ">=0.5.0"}
+,"engines": {"node": ">=0.4.0"}, "dependencies": {"coco": ">= 0.6.2"}
 
 ,"main": "./ckup", "bin": {"ckup": "./cli.js"}
 }

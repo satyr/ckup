@@ -30,7 +30,7 @@
     code $ 'coco> '
     strong -> text '"Hello, world!"'
     ol ->
-      do li3 = -> li i-~it for i from 3; void
+      do li3 = -> li i-~it for i til 3; void
       ul -> li3 3
 
 '''
@@ -43,7 +43,7 @@
 @script 'new ' + ->
   @[id] = document.getElementById id for id of <[ kup run url htm ]>
   @run.onclick = ~> @htm.value = Ckup.render @kup.value
-  @url.onclick = ~> open 'data:text/html,' + @htm.value
+  @url.onclick = ~> open 'data:text/html,' + encodeURIComponent @htm.value
 @A \https://github.com/satyr/ckup -> @img do
   id : \ribbon
   alt: \fork-me-on-github
