@@ -14,6 +14,17 @@ ckup import
     template.call me = ^this
     me._
 
+  # Compiles a string template to a template function, which, when called with
+  # `context`, executes with `context` bound to `this`; otherwise `ckup` is
+  # bound to `this` to remain backwards-compatibile.
+  compile: (template) ->
+    template = Function 'ckup' \
+      'with(ckup)' + (Coco ? require \coco)compile "#template"
+    (context) ~>
+      me = ^this
+      template.call context ? me, me
+      me._
+
   # `@_` holds the code being built.
   _: ''
 

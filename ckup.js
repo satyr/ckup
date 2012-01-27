@@ -1,12 +1,5 @@
 (function(){
-  var ckup, tag, _i, _ref, _len, __clone = function(it){
-    function fn(){ if (this.__proto__ !== it) this.__proto__ = it }
-    return fn.prototype = it, new fn;
-  }, __importAll = function(obj, src){ for (var key in src) obj[key] = src[key]; return obj }, __slice = [].slice, _fn = function(tailless, tag){
-    ckup[tag] = function(){
-      this.element(tag, arguments, tailless);
-    };
-  };
+  var ckup, tag, _i, _ref, _len, __slice = [].slice;
   ckup = typeof exports != 'undefined' && exports !== null
     ? exports
     : this.Ckup = {};
@@ -20,6 +13,18 @@
     }
     template.call(me = __clone(this));
     return me._;
+  };
+  ckup.compile = function(template){
+    var _this = this;
+    template = Function('ckup', 'with(ckup)' + (typeof Coco != 'undefined' && Coco !== null
+      ? Coco
+      : require('coco')).compile(template + ""));
+    return function(context){
+      var me;
+      me = __clone(_this);
+      template.call(context != null ? context : me, me);
+      return me._;
+    };
   };
   ckup._ = '';
   ckup.css = function(rules){
@@ -155,4 +160,17 @@
     (_fn.call(this, tag === '#' || tag === 'void' || tag === 'elements' || tag === 'area' || tag === 'base' || tag === 'br' || tag === 'col' || tag === 'command' || tag === 'embed' || tag === 'hr' || tag === 'img' || tag === 'input' || tag === 'keygen' || tag === 'link' || tag === 'meta' || tag === 'param' || tag === 'source' || tag === 'track' || tag === 'wbr', tag));
   }
   ckup.$ = ckup.quote, ckup.R = ckup.raw, ckup.T = ckup.text, ckup.E = ckup.entity, ckup.v = ckup['var'];
+  function __clone(it){
+    function fun(){} fun.prototype = it;
+    return new fun;
+  }
+  function __importAll(obj, src){
+    for (var key in src) obj[key] = src[key];
+    return obj;
+  }
+  function _fn(tailless, tag){
+    ckup[tag] = function(){
+      this.element(tag, arguments, tailless);
+    };
+  }
 }).call(this);
