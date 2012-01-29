@@ -109,9 +109,10 @@ for tag of <[
   s samp script section select small source span strong style sub summary sup
   table tbody td textarea tfoot th thead time title tr track
   u ul var video wbr
-]> then let tailless = tag of <[ # void elements
+]> then let tailless = tag of /* void elements */ <[
     area base br col command embed hr img input
-    keygen link meta param source track wbr ]>
+    keygen link meta param source track wbr
+  ]>
   # `@a href: url, ->` -> `@element \a, [href: url, ->]`
   ckup[tag] = -> @element tag, @@, tailless; void
 

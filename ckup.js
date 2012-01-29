@@ -1,12 +1,5 @@
 (function(){
-  var ckup, tag, _i, _ref, _len, __clone = function(it){
-    function fn(){ if (this.__proto__ !== it) this.__proto__ = it }
-    return fn.prototype = it, new fn;
-  }, __importAll = function(obj, src){ for (var key in src) obj[key] = src[key]; return obj }, __slice = [].slice, _fn = function(tailless, tag){
-    ckup[tag] = function(){
-      this.element(tag, arguments, tailless);
-    };
-  };
+  var ckup, tag, _i, _ref, _len, __slice = [].slice;
   ckup = typeof exports != 'undefined' && exports !== null
     ? exports
     : this.Ckup = {};
@@ -152,7 +145,25 @@
   };
   for (_i = 0, _len = (_ref = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'command', 'datalist', 'dd', 'del', 'details', 'dfn', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'map', 'mark', 'menu', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr']).length; _i < _len; ++_i) {
     tag = _ref[_i];
-    (_fn.call(this, tag === '#' || tag === 'void' || tag === 'elements' || tag === 'area' || tag === 'base' || tag === 'br' || tag === 'col' || tag === 'command' || tag === 'embed' || tag === 'hr' || tag === 'img' || tag === 'input' || tag === 'keygen' || tag === 'link' || tag === 'meta' || tag === 'param' || tag === 'source' || tag === 'track' || tag === 'wbr', tag));
+    (_fn.call(this, tag === 'area' || tag === 'base' || tag === 'br' || tag === 'col' || tag === 'command' || tag === 'embed' || tag === 'hr' || tag === 'img' || tag === 'input' || tag === 'keygen' || tag === 'link' || tag === 'meta' || tag === 'param' || tag === 'source' || tag === 'track' || tag === 'wbr', tag));
   }
   ckup.$ = ckup.quote, ckup.R = ckup.raw, ckup.T = ckup.text, ckup.E = ckup.entity, ckup.v = ckup['var'];
+  function __import(obj, src){
+    var own = {}.hasOwnProperty;
+    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+    return obj;
+  }
+  function __clone(it){
+    function fun(){} fun.prototype = it;
+    return new fun;
+  }
+  function __importAll(obj, src){
+    for (var key in src) obj[key] = src[key];
+    return obj;
+  }
+  function _fn(tailless, tag){
+    ckup[tag] = function(){
+      this.element(tag, arguments, tailless);
+    };
+  }
 }).call(this);
