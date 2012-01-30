@@ -4,15 +4,28 @@
     ? exports
     : this.Ckup = {};
   ckup.VERSION = '0.1.7b';
-  ckup.render = function(template){
-    var me;
+  ckup.render = function(template, mixin){
+    return this.renderer(template)(mixin);
+  };
+  ckup.renderer = function(template){
+    var _this = this;
     if (typeof template !== 'function') {
-      template = Function('with(this)' + (typeof Coco != 'undefined' && Coco !== null
-        ? Coco
-        : require('coco')).compile(template + ""));
+      template = this.compile(template);
     }
-    template.call(me = __clone(this));
-    return me._;
+    return function(mixin){
+      var me;
+      me = __clone(_this);
+      if (mixin) {
+        __import(me, mixin);
+      }
+      template.call(me);
+      return me._;
+    };
+  };
+  ckup.compile = function(code){
+    return Function('with(this)' + (typeof Coco != 'undefined' && Coco !== null
+      ? Coco
+      : require('coco')).compile(code + ""));
   };
   ckup._ = '';
   ckup.css = function(rules){
@@ -148,14 +161,14 @@
     (_fn.call(this, tag === 'area' || tag === 'base' || tag === 'br' || tag === 'col' || tag === 'command' || tag === 'embed' || tag === 'hr' || tag === 'img' || tag === 'input' || tag === 'keygen' || tag === 'link' || tag === 'meta' || tag === 'param' || tag === 'source' || tag === 'track' || tag === 'wbr', tag));
   }
   ckup.$ = ckup.quote, ckup.R = ckup.raw, ckup.T = ckup.text, ckup.E = ckup.entity, ckup.v = ckup['var'];
+  function __clone(it){
+    function fun(){} fun.prototype = it;
+    return new fun;
+  }
   function __import(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];
     return obj;
-  }
-  function __clone(it){
-    function fun(){} fun.prototype = it;
-    return new fun;
   }
   function __importAll(obj, src){
     for (var key in src) obj[key] = src[key];

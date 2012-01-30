@@ -59,16 +59,16 @@ body ->
 ></script><script src="ckup.js"
 ></script><script
 >new function (){
-      var id, _i, _ref, _len, _this = this;
-      for (_i = 0, _len = (_ref = ['kup', 'run', 'url', 'htm']).length; _i < _len; ++_i) {
-        id = _ref[_i];
-        this[id] = document.getElementById(id);
-      }
-      this.run.onclick = function(){
-        return _this.htm.value = Ckup.render(_this.kup.value);
-      };
-      return this.url.onclick = function(){
-        return open('data:text/html,' + encodeURIComponent(_this.htm.value));
-      };
-    }</script><a href="https://github.com/satyr/ckup"
+    var id, _i, _ref, _len, _this = this;
+    for (_i = 0, _len = (_ref = ['kup', 'run', 'url', 'htm']).length; _i < _len; ++_i) {
+      id = _ref[_i];
+      this[id] = document.getElementById(id);
+    }
+    this.run.onclick = function(){
+      return _this.htm.value = Ckup.render(_this.kup.value);
+    };
+    return this.url.onclick = function(){
+      return open('data:text/html,' + encodeURIComponent(_this.htm.value));
+    };
+  }</script><a href="https://github.com/satyr/ckup"
 ><img id="ribbon" alt="fork-me-on-github" src="http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"/></a>

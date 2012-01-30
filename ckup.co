@@ -3,16 +3,25 @@ ckup = exports ? @Ckup = {}
 ckup import
   VERSION: \0.1.7b
 
-  # `.call`s a `template` function with a `ckup` clone set to `this` value,
-  # returning the rendered HTML string.
-  render: (template) ->
-    unless typeof template is \function
-      # If `template` isn't a function, compile it using `Coco` global
-      # with `with` with `this` to enable `@`-less style.
-      template = Function \
-        'with(this)' + (Coco ? require \coco)compile "#template"
-    template.call me = ^this
-    me._
+  render: (template, mixin) -> @renderer(template) mixin
+
+  # Creates a renderer function that
+  renderer: (template) ->
+    template = @compile template unless typeof template is \function
+    (mixin) ~>
+      # clones `ckup`,
+      me = ^this
+      # attaches optional `mixin` properties to it,
+      me <<< mixin if mixin
+      # `.call`s `template` with it,
+      template.call me
+      # and returns the rendered HTML string.
+      me._
+
+  # Compile a Coco `code` into a template function,
+  # enabling `@`-less style using `with` hack.
+  compile: (code) ->
+    Function 'with(this)' + (Coco ? require \coco)compile "#code"
 
   # `@_` holds the code being built.
   _: ''
