@@ -1,7 +1,7 @@
 # `ckup = require \ckup` in CommonJS, `self.Ckup` in browser etc.
 ckup = exports ? @Ckup = {}
 ckup import
-  VERSION: \0.1.7b
+  VERSION: \0.1.7
 
   render: (template, mixin) -> @renderer(template) mixin
 
@@ -69,13 +69,13 @@ ckup import
     -> "#it"replace re, fn
 
   # Appends a DTD declaration.
-  doctype : -> @_ += "<!DOCTYPE #it>"; void
+  doctype : !-> @_ += "<!DOCTYPE #it>"
   # Appends a text as is.
-  raw     : -> @_ += it; void
+  raw     : !-> @_ += it
   # Appends a text node.
-  text    : -> @_ += @quote it; void
+  text    : !-> @_ += @quote it
   # Appends an HTML entity.
-  entity  : -> @_ += "&#{ if typeof it is \number then \# + it else it };"; void
+  entity  : !-> @_ += "&#{ if typeof it is \number then \# + it else it };"
 
   # Builds an HTML element.
   #
@@ -84,7 +84,7 @@ ckup import
   #   - a function which will be called recursively
   #   - any existent value
   # - `tailless`: Indicates end tag omission.
-  element: (name, args, tailless) ->
+  element: !(name, args, tailless) ->
     code = \< + name; bodies = []
     for arg of args
       if typeof arg is \object
@@ -98,11 +98,10 @@ ckup import
       body.=call this if typeof body is \function
       @_ += body if body?
     @_ += "</#name>"
-    void
 
   # Shortcut to `@a {href: url}, txt`.
-  A: (url, txt) ->
-    @element \a [...@@] <<< [href: url, txt or @quote url]; void
+  A: !(url, txt) ->
+    @element \a [...@@] <<< [href: url, txt or @quote url]
 
 # Each tag-named method delegates to `@element`.
 # ref. <http://dev.w3.org/html5/spec/Overview.html>
@@ -123,7 +122,7 @@ for tag of <[
     keygen link meta param source track wbr
   ]>
   # `@a href: url, ->` -> `@element \a, [href: url, ->]`
-  ckup[tag] = -> @element tag, @@, tailless; void
+  ckup[tag] = !-> @element tag, @@, tailless
 
 ## Aliases
 ckup{quote: $, raw: R, text: T, entity: E, var: v} = ckup

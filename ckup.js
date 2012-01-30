@@ -3,7 +3,7 @@
   ckup = typeof exports != 'undefined' && exports !== null
     ? exports
     : this.Ckup = {};
-  ckup.VERSION = '0.1.7b';
+  ckup.VERSION = '0.1.7';
   ckup.render = function(template, mixin){
     return this.renderer(template)(mixin);
   };
