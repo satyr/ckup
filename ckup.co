@@ -1,24 +1,25 @@
 # `ckup = require \ckup` in CommonJS, `self.Ckup` in browser etc.
 ckup = exports ? @Ckup = {}
 ckup import
-  VERSION: \0.1.7
+  VERSION: \0.1.8b
 
   render: (template, mixin) -> @renderer(template) mixin
 
-  # Creates a renderer function that
+  # Creates
   renderer: (template) ->
     template = @compile template unless typeof template is \function
+    # a renderer function that
     (mixin) ~>
-      # clones `ckup`,
+      # clones `ckup`
       me = ^this
-      # attaches optional `mixin` properties to it,
+      # with optional `mixin` properties,
       me <<< mixin if mixin
-      # `.call`s `template` with it,
+      # `.call`s `template` on the clone,
       template.call me
-      # and returns the rendered HTML string.
+      # and returns the rendered string.
       me._
 
-  # Compile a Coco `code` into a template function,
+  # Compiles a Coco `code` into a template function,
   # enabling `@`-less style using `with` hack.
   compile: (code) ->
     Function 'with(this)' + (Coco ? require \coco)compile "#code"
