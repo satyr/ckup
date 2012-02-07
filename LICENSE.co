@@ -1,9 +1,11 @@
-console.dir Ckup:
-  copyright:
-    author:
-      name: \satyr
-      mail: \murky.satyr\x40gmail.com
-    year: 2011
-  license:
-    name: \MIT or \X11
-    url : \http://www.opensource.org/licenses/mit-license.php
+console.log JSON.stringify do
+  Ckup:
+    copyright:
+      author:
+        name: \satyr
+        mail: \murky.satyr\x40gmail.com
+      year: 2012
+    license:
+      name: \MIT or \X11
+      url : \http://www.opensource.org/licenses/mit-license.php
+  ,,1
