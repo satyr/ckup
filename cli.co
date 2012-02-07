@@ -1,5 +1,5 @@
-#!coco
-`#!node`
+#!/usr/bin/env coco
+`#!/usr/bin/env node`
 
 #### `ckup` command line interface
 ckup = require \./ckup
