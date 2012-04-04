@@ -78,6 +78,35 @@
     }
     return code;
   };
+  ckup.coco = (function(utilities){
+    return function(){
+      var args, fn, preamble, key, val, _i, _ref;
+      args = 0 < (_i = arguments.length - 1) ? __slice.call(arguments, 0, _i) : (_i = 0, []), fn = arguments[_i];
+      fn = fn + "";
+      preamble = '';
+      for (key in _ref = utilities) {
+        val = _ref[key];
+        if (-1 !== fn.search("__" + key)) {
+          preamble += "var __" + key + " = " + val + ";";
+        }
+      }
+      return ";" + preamble + "(" + fn + ").apply(this, " + JSON.stringify(args) + ");";
+    };
+  }.call(this, {
+    clone: 'function(it){\n  function fun(){} fun.prototype = it;\n  return new fun;\n}',
+    extend: 'function(sub, sup){\n  function fun(){} fun.prototype = (sub.superclass = sup).prototype;\n  (sub.prototype = new fun).constructor = sub;\n  if (typeof sup.extended == \'function\') sup.extended(sub);\n  return sub;\n}',
+    bind: 'function(obj, key){\n  return function(){ return obj[key].apply(obj, arguments) };\n}',
+    'import': 'function(obj, src){\n  var own = {}.hasOwnProperty;\n  for (var key in src) if (own.call(src, key)) obj[key] = src[key];\n  return obj;\n}',
+    importAll: 'function(obj, src){\n  for (var key in src) obj[key] = src[key];\n  return obj;\n}',
+    repeatString: 'function(str, n){\n  for (var r = \'\'; n > 0; (n >>= 1) && (str += str)) if (n & 1) r += str;\n  return r;\n}',
+    repeatArray: 'function(arr, n){\n  for (var r = []; n > 0; (n >>= 1) && (arr = arr.concat(arr)))\n    if (n & 1) r.push.apply(r, arr);\n  return r;\n}',
+    of: 'function(x, arr){\n  var i = 0, l = arr.length >>> 0;\n  while (i < l) if (x === arr[i++]) return true;\n  return false;\n}',
+    split: "''.split",
+    replace: "''.replace",
+    toString: '{}.toString',
+    join: '[].join',
+    slice: '[].slice'
+  }));
   ckup.COMMA = /\s*,\s*/;
   ckup.VENDORS = ['webkit', 'moz', 'ms', 'o'];
   ckup.quote = (function(re){
