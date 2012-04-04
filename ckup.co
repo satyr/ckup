@@ -51,6 +51,69 @@ ckup import
       subrules     and code += @css subrules
     code
 
+  # Renders a function as JavaScript.
+  coco: let utilities = {
+    # Creates an object's prototypal child, ensuring `__proto__`.
+    clone: '''function(it){
+      function fun(){} fun.prototype = it;
+      return new fun;
+    }'''
+    # Sets up `.prototype` between a pair of constructors
+    # as well as `.constructor` and `.superclass` references.
+    extend: '''function(sub, sup){
+      function fun(){} fun.prototype = (sub.superclass = sup).prototype;
+      (sub.prototype = new fun).constructor = sub;
+      if (typeof sup.extended == 'function') sup.extended(sub);
+      return sub;
+    }'''
+
+    # Creates a bound method.
+    bind: '''function(obj, key){
+      return function(){ return obj[key].apply(obj, arguments) };
+    }'''
+
+    # Copies properties from right to left.
+    import: '''function(obj, src){
+      var own = {}.hasOwnProperty;
+      for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+      return obj;
+    }'''
+    importAll: '''function(obj, src){
+      for (var key in src) obj[key] = src[key];
+      return obj;
+    }'''
+
+    repeatString: '''function(str, n){
+      for (var r = ''; n > 0; (n >>= 1) && (str += str)) if (n & 1) r += str;
+      return r;
+    }'''
+    repeatArray: '''function(arr, n){
+      for (var r = []; n > 0; (n >>= 1) && (arr = arr.concat(arr)))
+        if (n & 1) r.push.apply(r, arr);
+      return r;
+    }'''
+
+    of: '''function(x, arr){
+      var i = 0, l = arr.length >>> 0;
+      while (i < l) if (x === arr[i++]) return true;
+      return false;
+    }'''
+
+    # Shortcuts to speed up the lookup time for native methods.
+    split    : "''.split"
+    replace  : "''.replace"
+    toString : '{}.toString'
+    join     : '[].join'
+    slice    : '[].slice'
+  }
+    (...args, fn) ->
+      fn = "#fn"
+      preamble = ''
+      for key, val in utilities
+        if -1 is not fn.search "__#key"
+          preamble += "var __#key = #val;"
+      ";#{preamble}(#fn).apply(this, #{JSON.stringify args});"
+
   COMMA   : /\s*,\s*/
   VENDORS : <[ webkit moz ms o ]>
 
