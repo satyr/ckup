@@ -9,6 +9,7 @@
  [{"type": "MIT", "url": "https://github.com/satyr/ckup/raw/master/LICENSE.co"}]
 
 ,"homepage"  : "http://satyr.github.com/ckup/"
+,"bugs"      : "https://github.com/satyr/ckup/issues"
 ,"repository": {"type": "git", "url": "git://github.com/satyr/ckup.git"}
 
 ,"engines": {"node": ">=0.6.6"}, "dependencies": {"coco": ">= 0.7.0"}
