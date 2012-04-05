@@ -1,8 +1,7 @@
 #!/usr/bin/env coco
-`#!/usr/bin/env node`
 
 #### `ckup` command line interface
-ckup = require \./ckup
+ckup = require \ckup
 o    = require(\coco/optparse) do
   print   : 'write to stdout instead of .htm'
   stdin   : 'read stdin, then write to the given file or stdout'
