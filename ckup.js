@@ -1,20 +1,20 @@
 (function(){
-  var ckup, tag, _i, _ref, _len, __slice = [].slice;
+  var ckup, tag, __i, __ref, __len, __slice = [].slice;
   ckup = typeof exports != 'undefined' && exports !== null
     ? exports
     : this.Ckup = {};
-  ckup.VERSION = '0.1.8b';
+  ckup.VERSION = '0.1.8';
   ckup.render = function(template, mixin){
     return this.renderer(template)(mixin);
   };
   ckup.renderer = function(template){
-    var _this = this;
+    var __this = this;
     if (typeof template !== 'function') {
       template = this.compile(template);
     }
     return function(mixin){
       var me;
-      me = __clone(_this);
+      me = __clone(__this);
       if (mixin) {
         __import(me, mixin);
       }
@@ -29,7 +29,7 @@
   };
   ckup._ = '';
   ckup.css = function(rules){
-    var code, selector, children, that, kv, selectors, declarations, subrules, key, val, v, ss, k, s, _i, _ref, _len, _j, _len2;
+    var code, selector, children, that, kv, selectors, declarations, subrules, key, val, v, ss, k, s, __i, __ref, __len, __j, __len1;
     code = '';
     if (typeof rules === 'function') {
       rules = rules.call(this);
@@ -40,8 +40,8 @@
         children = children.call(this);
       }
       if (that = children.mixin, delete children.mixin, that) {
-        for (_i = 0, _len = (_ref = [].concat(that)).length; _i < _len; ++_i) {
-          kv = _ref[_i];
+        for (__i = 0, __len = (__ref = [].concat(that)).length; __i < __len; ++__i) {
+          kv = __ref[__i];
           __importAll(children, kv);
         }
       }
@@ -53,8 +53,8 @@
         case 'number':
           if ((key = this.decamelize(key)).charAt() === '$') {
             key = key.slice(1);
-            for (_i = 0, _len = (_ref = this.VENDORS).length; _i < _len; ++_i) {
-              v = _ref[_i];
+            for (__i = 0, __len = (__ref = this.VENDORS).length; __i < __len; ++__i) {
+              v = __ref[__i];
               declarations += "  -" + v + "-" + key + ": " + val + ";\n";
             }
           }
@@ -63,10 +63,10 @@
         default:
           ss = [];
           selectors || (selectors = selector.split(this.COMMA));
-          for (_i = 0, _len = (_ref = key.split(this.COMMA)).length; _i < _len; ++_i) {
-            k = _ref[_i];
-            for (_j = 0, _len2 = selectors.length; _j < _len2; ++_j) {
-              s = selectors[_j];
+          for (__i = 0, __len = (__ref = key.split(this.COMMA)).length; __i < __len; ++__i) {
+            k = __ref[__i];
+            for (__j = 0, __len1 = selectors.length; __j < __len1; ++__j) {
+              s = selectors[__j];
               ss.push(s + " " + k);
             }
           }
@@ -120,11 +120,11 @@
     this._ += "&" + (typeof it === 'number' ? '#' + it : it) + ";";
   };
   ckup.element = function(name, args, tailless){
-    var code, bodies, arg, key, val, body, _i, _len;
+    var code, bodies, arg, key, val, body, __i, __len;
     code = '<' + name;
     bodies = [];
-    for (_i = 0, _len = args.length; _i < _len; ++_i) {
-      arg = args[_i];
+    for (__i = 0, __len = args.length; __i < __len; ++__i) {
+      arg = args[__i];
       if (typeof arg === 'object') {
         for (key in arg) {
           val = arg[key];
@@ -139,8 +139,8 @@
       return;
     }
     this._ += code + "\n>";
-    for (_i = 0, _len = bodies.length; _i < _len; ++_i) {
-      body = bodies[_i];
+    for (__i = 0, __len = bodies.length; __i < __len; ++__i) {
+      body = bodies[__i];
       if (typeof body === 'function') {
         body = body.call(this);
       }
@@ -151,14 +151,14 @@
     this._ += "</" + name + ">";
   };
   ckup.A = function(url, txt){
-    var _ref;
-    this.element('a', (_ref = __slice.call(arguments), _ref[0] = {
+    var __ref;
+    this.element('a', (__ref = __slice.call(arguments), __ref[0] = {
       href: url
-    }, _ref[1] = txt || this.quote(url), _ref));
+    }, __ref[1] = txt || this.quote(url), __ref));
   };
-  for (_i = 0, _len = (_ref = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'command', 'datalist', 'dd', 'del', 'details', 'dfn', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'map', 'mark', 'menu', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr']).length; _i < _len; ++_i) {
-    tag = _ref[_i];
-    (_fn.call(this, tag === 'area' || tag === 'base' || tag === 'br' || tag === 'col' || tag === 'command' || tag === 'embed' || tag === 'hr' || tag === 'img' || tag === 'input' || tag === 'keygen' || tag === 'link' || tag === 'meta' || tag === 'param' || tag === 'source' || tag === 'track' || tag === 'wbr', tag));
+  for (__i = 0, __len = (__ref = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'command', 'datalist', 'dd', 'del', 'details', 'dfn', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'map', 'mark', 'menu', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr']).length; __i < __len; ++__i) {
+    tag = __ref[__i];
+    (__fn.call(this, tag === 'area' || tag === 'base' || tag === 'br' || tag === 'col' || tag === 'command' || tag === 'embed' || tag === 'hr' || tag === 'img' || tag === 'input' || tag === 'keygen' || tag === 'link' || tag === 'meta' || tag === 'param' || tag === 'source' || tag === 'track' || tag === 'wbr', tag));
   }
   ckup.$ = ckup.quote, ckup.R = ckup.raw, ckup.T = ckup.text, ckup.E = ckup.entity, ckup.v = ckup['var'];
   function __clone(it){
@@ -174,7 +174,7 @@
     for (var key in src) obj[key] = src[key];
     return obj;
   }
-  function _fn(tailless, tag){
+  function __fn(tailless, tag){
     ckup[tag] = function(){
       this.element(tag, arguments, tailless);
     };

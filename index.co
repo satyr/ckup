@@ -30,7 +30,7 @@
     code $ 'coco> '
     strong -> text '"Hello, world!"'
     ol ->
-      do li3 = -> li i-~it for i til 3; void
+      do li3 = !-> li i-~it for i til 3
       ul -> li3 3
 
 '''

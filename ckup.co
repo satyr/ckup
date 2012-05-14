@@ -1,7 +1,7 @@
 # `ckup = require \ckup` in CommonJS, `self.Ckup` in browser etc.
 ckup = exports ? @Ckup = {}
 ckup import
-  VERSION: \0.1.8b
+  VERSION: \0.1.8
 
   render: (template, mixin) -> @renderer(template) mixin
 

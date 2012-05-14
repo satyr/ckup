@@ -1,4 +1,4 @@
-{"name": "ckup", "version": "0.1.7"
+{"name": "ckup", "version": "0.1.8"
 
 ,"description": "Markup as Coco"
 ,"keywords"   : ["html", "css", "template", "coco"]
@@ -12,7 +12,7 @@
 ,"bugs"      : "https://github.com/satyr/ckup/issues"
 ,"repository": {"type": "git", "url": "git://github.com/satyr/ckup.git"}
 
-,"engines": {"node": ">=0.6.6"}, "dependencies": {"coco": ">= 0.7.0"}
+,"engines": {"node": ">=0.6.15"}, "dependencies": {"coco": ">= 0.7.1"}
 
 ,"main": "./ckup", "bin": "./cli.co", "files": ["ckup.js", "cli.co"]
 }
