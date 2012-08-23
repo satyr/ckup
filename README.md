@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/satyr/ckup.png)](http://travis-ci.org/satyr/ckup)
 ckup
 ====
 is a tiny library for writing HTML and/or CSS using
